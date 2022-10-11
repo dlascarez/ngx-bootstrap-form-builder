@@ -3,5 +3,36 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "ngx-bootstrap-form-builder": {
+      "projectType": "library",
+      "root": "projects/ngx-bootstrap-form-builder",
+      "sourceRoot": "projects/ngx-bootstrap-form-builder/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-bootstrap-form-builder/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-bootstrap-form-builder/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-bootstrap-form-builder/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-bootstrap-form-builder/src/test.ts",
+            "tsConfig": "projects/ngx-bootstrap-form-builder/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-bootstrap-form-builder/karma.conf.js"
+          }
+        }
+      }
+    }
   }
 }
