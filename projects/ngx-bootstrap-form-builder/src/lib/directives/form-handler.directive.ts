@@ -5,28 +5,29 @@ import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/for
   selector: '[formGroup]'
 })
 export class FormHandlerDirective {
-  @Input() private formGroup?: FormGroup;
+  @Input() public formGroup: FormGroup;
   @Output() public validSubmit: EventEmitter<any>;
 
   constructor() {
     this.validSubmit = new EventEmitter();
+    this.formGroup = new FormGroup({});
   }
 
   @HostListener("submit")
   public onSubmit(): void {
-    this._markAsTouchedAndDirty(this.formGroup!);
-    if (this.formGroup?.valid) {
+    this.markAsTouchedAndDirty(this.formGroup);
+    if (this.formGroup.valid) {
       this.validSubmit?.emit(this.formGroup.value);
     }
   }
 
-  private _markAsTouchedAndDirty(control: AbstractControl): void {
+  public markAsTouchedAndDirty(control: AbstractControl): void {
     if (control instanceof FormGroup) {
       Object.keys(control.controls).forEach(key =>
-        this._markAsTouchedAndDirty(control.controls[key])
+        this.markAsTouchedAndDirty(control.controls[key])
       );
     } else if (control instanceof FormArray) {
-      control.controls.forEach(c => this._markAsTouchedAndDirty(c));
+      control.controls.forEach(c => this.markAsTouchedAndDirty(c));
     } else if (control instanceof FormControl && control.enabled) {
       control.markAsDirty();
       control.markAsTouched();
