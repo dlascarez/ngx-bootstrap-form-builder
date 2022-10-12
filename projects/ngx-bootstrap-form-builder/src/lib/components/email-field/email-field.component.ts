@@ -6,7 +6,7 @@ import { CommonComponent } from '../common-component';
 @Component({
   selector: 'bs-email-field',
   templateUrl: './email-field.component.html',
-  styles: []
+  styleUrls: ['../common-component.css']
 })
 export class EmailFieldComponent extends CommonComponent implements ControlValueAccessor {
   @Input() public id: string;
@@ -14,10 +14,10 @@ export class EmailFieldComponent extends CommonComponent implements ControlValue
   @Input() public label?: string;
   @Input() public placeholder?: string;
   @Input() public disabled: boolean;
-  @Input() public showErrorDescription?: boolean;
-  @Input() public class?: string;
+  @Input() public showErrorDescription: boolean;
+  @Input() public class: string;
+  @Input() public value: string;
 
-  public value: string;
   public onTouched = () => { };
   public onChange = (value: string) => { };
 

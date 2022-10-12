@@ -6,7 +6,7 @@ import { CommonComponent } from '../common-component';
 @Component({
   selector: 'bs-number-field',
   templateUrl: './number-field.component.html',
-  styles: []
+  styleUrls: ['../common-component.css']
 })
 export class NumberFieldComponent extends CommonComponent implements ControlValueAccessor {
   @Input() public id: string;
@@ -17,8 +17,10 @@ export class NumberFieldComponent extends CommonComponent implements ControlValu
 
   @Input() public faIcon?: string;
   @Input() public textIcon?: string;
-  
-  public value: number;
+  @Input() public value: number;
+  @Input() public class: string;
+  @Input() public showErrorDescription: boolean;
+
   public onTouched = () => { };
   public onChange = (value: number) => { };
 
@@ -39,6 +41,8 @@ export class NumberFieldComponent extends CommonComponent implements ControlValu
     this.name = this.id;
     this.disabled = false;
     this.value = null as any;
+    this.showErrorDescription = true;
+    this.class = 'mb-2';
   }
 
   public registerOnChange(fn: (value: number) => void): void {

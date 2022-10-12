@@ -6,7 +6,7 @@ import { CommonComponent } from '../common-component';
 @Component({
   selector: 'bs-drop-down-field',
   templateUrl: './drop-down-field.component.html',
-  styles: []
+  styleUrls: ['../common-component.css']
 })
 export class DropDownFieldComponent extends CommonComponent implements ControlValueAccessor {
   @Input() public id: string;
@@ -16,9 +16,9 @@ export class DropDownFieldComponent extends CommonComponent implements ControlVa
   @Input() public items: any[];
   @Input() public keyValue: string;
   @Input() public textValue: string;
-  @Input() public showErrorDescription?: boolean;
-  @Input() public showSelectOne?: boolean;
-  @Input() public class?: string;
+  @Input() public showErrorDescription: boolean;
+  @Input() public showSelectOne: boolean;
+  @Input() public class: string;
   @Input() public value: string;
   @Output() public valueChanged: EventEmitter<any>;
 

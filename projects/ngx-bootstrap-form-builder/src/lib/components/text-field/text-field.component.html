@@ -1,4 +1,4 @@
-<div class="mb-2">
+<div [class]="class">
     <label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">{{label}}</label>
     <div [ngClass]="{ 'is-invalid': isInvalid, 'is-valid': isValid, 'has-icon': hasIcon }">
         <i *ngIf="(faIcon ?? '') !== ''" class="{{faIcon}} input-icon"></i>
@@ -7,7 +7,7 @@
             [ngClass]="{ 'is-invalid': isInvalid, 'is-valid': isValid }" (blur)="onTouched()"
             (change)="onChangeValue($event)" [value]="value" [disabled]="disabled">
     </div>
-    <span *ngIf="isInvalid" class="invalid-feedback">
+    <span *ngIf="isInvalid && showErrorDescription" class="invalid-feedback">
         {{ getErrorMessage(formControl, name, label) }}
     </span>
 </div>

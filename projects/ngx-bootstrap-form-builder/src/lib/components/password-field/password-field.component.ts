@@ -6,7 +6,7 @@ import { CommonComponent } from '../common-component';
 @Component({
   selector: 'bs-password-field',
   templateUrl: './password-field.component.html',
-  styles: []
+  styleUrls: ['../common-component.css']
 })
 export class PasswordFieldComponent extends CommonComponent implements ControlValueAccessor {
   @Input() public id: string;
@@ -14,6 +14,8 @@ export class PasswordFieldComponent extends CommonComponent implements ControlVa
   @Input() public label?: string;
   @Input() public placeholder?: string;
   @Input() public disabled: boolean;
+  @Input() public class: string;
+  @Input() public showErrorDescription: boolean;
 
   public value: string;
   public onTouched = () => { };
@@ -33,6 +35,8 @@ export class PasswordFieldComponent extends CommonComponent implements ControlVa
     this.name = this.id;
     this.disabled = false;
     this.value = '';
+    this.showErrorDescription = true;
+    this.class = 'mb-2';
   }
 
   public registerOnChange(fn: (value: string) => void): void {

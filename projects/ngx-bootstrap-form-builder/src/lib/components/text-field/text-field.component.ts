@@ -6,7 +6,7 @@ import { CommonComponent } from '../common-component';
 @Component({
   selector: 'bs-text-field',
   templateUrl: './text-field.component.html',
-  styles: []
+  styleUrls: ['../common-component.css']
 })
 export class TextFieldComponent extends CommonComponent implements ControlValueAccessor {
   @Input() public id: string;
@@ -17,7 +17,9 @@ export class TextFieldComponent extends CommonComponent implements ControlValueA
 
   @Input() public faIcon?: string;
   @Input() public textIcon?: string;
-  @Input() public value?: string;
+  @Input() public value: string;
+  @Input() public class: string;
+  @Input() public showErrorDescription: boolean;
 
   public onTouched = () => { };
   public onChange = (value: string) => { };
@@ -38,6 +40,9 @@ export class TextFieldComponent extends CommonComponent implements ControlValueA
     this.id = RandomString.create();
     this.name = this.id;
     this.disabled = false;
+    this.value = '';
+    this.showErrorDescription = true;
+    this.class = 'mb-2';
   }
 
   public registerOnChange(fn: (value: string) => void): void {

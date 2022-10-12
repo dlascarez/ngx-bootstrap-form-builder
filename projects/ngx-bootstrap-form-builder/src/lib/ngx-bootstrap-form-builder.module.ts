@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
+// Directives
+import { FormHandlerDirective } from './directives/form-handler.directive';
+
 // Components
 import { TextFieldComponent } from './components/text-field/text-field.component';
 import { PasswordFieldComponent } from './components/password-field/password-field.component';
@@ -15,7 +18,8 @@ import { DropDownFieldComponent } from './components/drop-down-field/drop-down-f
     PasswordFieldComponent,
     NumberFieldComponent,
     EmailFieldComponent,
-    DropDownFieldComponent
+    DropDownFieldComponent,
+    FormHandlerDirective
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,8 @@ import { DropDownFieldComponent } from './components/drop-down-field/drop-down-f
     PasswordFieldComponent,
     NumberFieldComponent,
     EmailFieldComponent,
-    DropDownFieldComponent
+    DropDownFieldComponent,
+    FormHandlerDirective
   ]
 })
 export class NgxBootstrapFormBuilderModule { }
