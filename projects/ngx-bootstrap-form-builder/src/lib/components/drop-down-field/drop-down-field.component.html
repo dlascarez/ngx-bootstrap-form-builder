@@ -1,0 +1,13 @@
+<div [class]="class">
+    <label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">{{label}}</label>
+    <select [id]="id" [name]="name" class="form-select" [ngClass]="{ 'is-invalid': isInvalid, 'is-valid': isValid }"
+        (blur)="onTouched()" (change)="onChangeValue($event)" [disabled]="disabled">
+        <option *ngIf="showSelectOne" value="" [selected]="value === ''">-- Please choose one --</option>
+        <option *ngFor="let item of items;" [value]="item[keyValue]" [selected]="value === item[keyValue]?.toString()">
+            {{ item[textValue] }}
+        </option>
+    </select>
+    <span *ngIf="isInvalid && showErrorDescription" class="invalid-feedback">
+        {{ getErrorMessage(formControl, name, label) }}
+    </span>
+</div>
