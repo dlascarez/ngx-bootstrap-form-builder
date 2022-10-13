@@ -1,24 +1,113 @@
-# NgxBootstrapFormBuilder
+# Ngx-Bootstrap-Form-Builder
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+This module will help you to make bootstrap forms and their  validation easy.
 
-## Code scaffolding
+## Install
 
-Run `ng generate component component-name --project ngx-bootstrap-form-builder` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-bootstrap-form-builder`.
-> Note: Don't forget to add `--project ngx-bootstrap-form-builder` or else it will be added to the default project in your `angular.json` file. 
+1. Install by running: `npm install --save ngx-bootstrap-form-builder`
+2. Install bootstrap by running: `npm install --save bootstrap`
+3. Add `NgxBootstrapFormBuilderModule` to your `app.module.ts` imports:
 
-## Build
+```ts
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxBootstrapFormBuilderModule } from 'ngx-bootstrap-form-builder';
 
-Run `ng build ngx-bootstrap-form-builder` to build the project. The build artifacts will be stored in the `dist/` directory.
+import { AppComponent } from './app.component';
 
-## Publishing
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    NgxBootstrapFormBuilderModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
-After building your library with `ng build ngx-bootstrap-form-builder`, go to the dist folder `cd dist/ngx-bootstrap-form-builder` and run `npm publish`.
+## Usage
+This module has its own fields to help you to create poweful forms with validation easy.
 
-## Running unit tests
+### app.component.html
+```html
+<div class="container mt-2">
+  <h2>Demo</h2>
+  <hr>
+  <form [formGroup]="frmGroup" (validSubmit)="formSubmit($event)">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <bs-text-field label="Name" placeholder="Your name goes here" formControlName="name"></bs-text-field>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <bs-text-field label="Last name" placeholder="optional" formControlName="lastName"></bs-text-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <bs-text-field label="Email" placeholder="my_account@gmail.com" formControlName="email"></bs-text-field>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <bs-drop-down-field label="Gender" [items]="genders" keyValue="id" textValue="label" formControlName="gender">
+        </bs-drop-down-field>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+      Send
+    </button>
+  </form>
+</div>
+```
 
-Run `ng test ngx-bootstrap-form-builder` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### app.component.ts
+```ts
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-## Further help
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  public frmGroup: FormGroup;
+  public genders: any[];
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  constructor() {
+    this.frmGroup = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      lastName: new FormControl(''),
+      email: new FormControl('', [Validators.required]),
+      gender: new FormControl('', [Validators.required])
+    });
+    this.genders = [{ id: 'M', label: 'Male' }, { id: 'F', label: 'Famale' }];
+  }
+
+  public formSubmit(data: any): void {
+    console.log(data);
+  }
+}
+
+```
+
+## Available fields
+
+Text Field: `<bs-text-field></bs-text-field>`
+
+| Atribute | Data type | Description |
+| -------- | ----- | ----------- |
+| id       | `string`  | Id assigned to html control. If it is not provided a random will assigned. |
+| name     | `string`  | Name assigned to html control. If it is not provided a random will assigned. |
+| label    | `string`  | This atribute will assign a bootstrap label for the field. If it is not provided html label will not exists. |
+| placeholder | `string` | Placeholder assigned to html control. |
+| disabled | `boolean` | Enable / Disable field. Default: "false" |
+| showErrorDescription | `boolean` | Show / Hide error message when the field is invalid. Default: "true" |
+| faIcon | `string` | Adds an icon to the field. This attribute requires Font Awesome installed in your project. Default: "" |
+| textIcon | `string` | Adds a character as an icon to the field. Default: "" |
+| value | `string` | Value assigned to the field. Default: "" |
+| class | `string` | Custom CSS classes to be assigned to field container. Default: "mb-2" |
