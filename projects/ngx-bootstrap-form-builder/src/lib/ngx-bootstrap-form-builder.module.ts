@@ -21,10 +21,7 @@ import { DropDownFieldComponent } from './components/drop-down-field/drop-down-f
     DropDownFieldComponent,
     FormHandlerDirective
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule],
   exports: [
     TextFieldComponent,
     PasswordFieldComponent,

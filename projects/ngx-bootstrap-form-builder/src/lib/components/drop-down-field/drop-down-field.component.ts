@@ -57,7 +57,7 @@ export class DropDownFieldComponent extends CommonComponent implements ControlVa
   }
 
   public writeValue(value: string): void {
-    this.value = value;
+    this.value = (value ?? '').toString();
     this.onChange(value);
   }
 
