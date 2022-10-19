@@ -1,0 +1,16 @@
+/* Input icon */
+.has-icon {
+    position: relative;
+}
+
+.has-icon .input-icon {
+    position: absolute;
+    top: calc(30%);
+    left: 0.8rem;
+    font-size: 1.12rem;
+}
+
+.has-icon label,
+.has-icon .form-control {
+    padding-left: 2.6rem;
+}

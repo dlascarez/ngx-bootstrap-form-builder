@@ -5,36 +5,36 @@ export interface IErrorMessage {
 export const CUSTOM_ERRORS: IErrorMessage[] = [
     {
         error: 'required',
-        format: label => `${label} es requerido`
+        format: label => `${label} is required`
     },
     {
         error: 'pattern',
-        format: label => `${label} Es invalido`
+        format: label => `${label} is invalid`
     },
     {
         error: 'minlength',
         format: (label, error) =>
-            `${label} debe tener al menos ${error.requiredLength} caracteres`
+            `${label} must have at least ${error.requiredLength} characters`
     },
     {
         error: 'maxlength',
         format: (label, error) =>
-            `${label} no debe tener más de ${error.requiredLength} caracteres`
+            `${label} must not have more than ${error.requiredLength} characters`
     },
     {
         error: 'requiredTrue',
-        format: label => `${label} es requerido`
+        format: label => `${label} is required`
     },
     {
         error: 'email',
-        format: label => `${label} no parece una dirección de correo electrónico válida`
+        format: label => `${label} doesn't look like a valid email address.`
     },
     {
         error: 'max',
-        format: (label, error) => `${label} no debe ser mayor que ${error.max}`
+        format: (label, error) => `${label} must not be greater than ${error.max}`
     },
     {
         error: 'min',
-        format: (label, error) => `${label} no debe ser inferior a ${error.min}`
+        format: (label, error) => `${label} must not be less than ${error.min}`
     }
 ];
