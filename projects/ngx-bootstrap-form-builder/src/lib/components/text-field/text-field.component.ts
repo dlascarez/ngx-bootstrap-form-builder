@@ -1,68 +1,66 @@
-import { Component, Input, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, forwardRef, Input, NgModule } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
-import { CommonComponent } from '../common-component';
 
+export const TEXTFIELD_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => BsTextField),
+  multi: true
+};
 @Component({
   selector: 'bs-text-field',
+  providers: [TEXTFIELD_VALUE_ACCESSOR],
   templateUrl: './text-field.component.html',
   styleUrls: ['../common-component.css']
 })
-export class TextFieldComponent extends CommonComponent implements ControlValueAccessor {
-  @Input() public id: string;
-  @Input() public name: string;
+export class BsTextField implements ControlValueAccessor {
+  @Input() public id: string = RandomString.create();
   @Input() public label?: string;
   @Input() public placeholder?: string;
-  @Input() public disabled: boolean;
-
   @Input() public faIcon?: string;
   @Input() public textIcon?: string;
-  @Input() public value: string;
-  @Input() public class: string;
-  @Input() public showErrorDescription: boolean;
+  @Input() public name: string = '';
+  @Input() public class: string = '';
+  @Input() public disabled: boolean = false;
 
-  public onTouched = () => { };
-  public onChange = (value: string) => { };
-
-  public get isInvalid(): boolean {
-    return (this.formControl.invalid && (this.formControl.dirty || this.formControl.touched))!;
+  @Input() public get value(): string {
+    return this._value;
   }
-  public get isValid(): boolean {
-    return (this.formControl.valid && (this.formControl.dirty || this.formControl.touched))!;
+  set value(obj: string) {
+    if (obj !== this._value) {
+      this._onChange(obj);
+      this._value = obj;
+    }
   }
   public get hasIcon(): boolean {
     return (this.faIcon ?? '') !== '' || (this.textIcon ?? '') !== '';
   }
+  private _value: string = '';
+  private _onChange: (_: any) => void = () => { };
+  private _onTouched: () => void = () => { };
 
-  constructor(@Self() public formControl: NgControl) {
-    super();
-    this.formControl.valueAccessor = this;
-    this.id = RandomString.create();
-    this.name = this.id;
-    this.disabled = false;
-    this.value = '';
-    this.showErrorDescription = true;
-    this.class = 'mb-2';
+  public writeValue(value: any): void {
+    if (value !== this._value) {
+      this._value = value;
+    }
   }
-
-  public registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
+  public registerOnChange(fn: (_: any) => void): void {
+    this._onChange = fn;
   }
-
-  public registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+  public registerOnTouched(fn: any): void {
+    this._onTouched = fn;
   }
-
-  public writeValue(value: string): void {
-    this.value = value;
-    this.onChange(value);
+  public setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
-
-  public onChangeValue(e: any): void {
-    this.writeValue(e.target.value);
-  }
-
-  public setDisabledState(disabled: boolean): void {
-    this.disabled = disabled;
+  public onBlur(): void {
+    this._onTouched();
   }
 }
+@NgModule({
+  imports: [CommonModule, FormsModule],
+  exports: [BsTextField],
+  declarations: [BsTextField]
+})
+export class BsTextFieldModule { }
