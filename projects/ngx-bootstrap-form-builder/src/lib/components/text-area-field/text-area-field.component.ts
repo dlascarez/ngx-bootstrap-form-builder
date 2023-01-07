@@ -3,44 +3,38 @@ import { Component, forwardRef, Input, NgModule } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
 
-export const NUMBERFIELD_VALUE_ACCESSOR: any = {
+export const TEXTAREA_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => BsNumberField),
+  useExisting: forwardRef(() => BsTextAreaField),
   multi: true
 };
-export const NUMBERFIELD_VALIDATOR: any = {
+export const TEXTAREA_VALIDATOR: any = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => BsNumberField),
+  useExisting: forwardRef(() => BsTextAreaField),
   multi: true
 };
 @Component({
-  selector: 'bs-number-field',
-  providers: [NUMBERFIELD_VALUE_ACCESSOR, NUMBERFIELD_VALIDATOR],
-  templateUrl: './number-field.component.html',
-  styleUrls: ['../common-component.css']
+  selector: 'bs-text-area-field',
+  providers: [TEXTAREA_VALUE_ACCESSOR, TEXTAREA_VALIDATOR],
+  templateUrl: './text-area-field.component.html',
+  styles: []
 })
-export class BsNumberField implements ControlValueAccessor, Validator {
+export class BsTextAreaField implements ControlValueAccessor, Validator {
   @Input() public id: string = RandomString.create();
   @Input() public label?: string;
   @Input() public placeholder?: string;
-  @Input() public faIcon?: string;
-  @Input() public textIcon?: string;
   @Input() public name: string = this.id;
   @Input() public class: string = 'mb-2';
   @Input() public disabled: boolean = false;
 
-  @Input() public get value(): number | null {
+  @Input() public get value(): string {
     return this._value;
   }
-  set value(obj: number | null) {
-    const temp = Number(obj);
-    if (temp !== Number(this._value)) {
-      this._onChange(temp);
-      this._value = temp;
+  set value(obj: string) {
+    if (obj !== this._value) {
+      this._onChange(obj);
+      this._value = obj;
     }
-  }
-  public get hasIcon(): boolean {
-    return (this.faIcon ?? '') !== '' || (this.textIcon ?? '') !== '';
   }
   public get isInvalid(): boolean {
     return (this._control?.invalid && (this._control.dirty || this._control.touched))!;
@@ -48,14 +42,14 @@ export class BsNumberField implements ControlValueAccessor, Validator {
   public get isValid(): boolean {
     return (this._control?.valid && (this._control.dirty || this._control.touched))!;
   }
-  private _value: number | null = null;
+  private _value: string = '';
   private _onChange: (_: any) => void = () => { };
   private _onTouched: () => void = () => { };
   private _control?: AbstractControl;
 
   public writeValue(value: any): void {
     if (value !== this._value) {
-      this._value = Number(value);
+      this._value = value;
     }
   }
   public registerOnChange(fn: (_: any) => void): void {
@@ -77,7 +71,7 @@ export class BsNumberField implements ControlValueAccessor, Validator {
 }
 @NgModule({
   imports: [CommonModule, FormsModule],
-  exports: [BsNumberField],
-  declarations: [BsNumberField]
+  exports: [BsTextAreaField],
+  declarations: [BsTextAreaField]
 })
-export class BsNumberFieldModule { }
+export class BsTextAreaFieldModule { }

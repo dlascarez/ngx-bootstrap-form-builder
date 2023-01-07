@@ -1,62 +1,82 @@
-import { Component, Input, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, forwardRef, Input, NgModule } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
-import { CommonComponent } from '../common-component';
 
+export const PASSFIELD_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => BsPasswordField),
+  multi: true
+};
+export const PASSFIELD_VALIDATOR: any = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => BsPasswordField),
+  multi: true
+};
 @Component({
   selector: 'bs-password-field',
+  providers: [PASSFIELD_VALUE_ACCESSOR, PASSFIELD_VALIDATOR],
   templateUrl: './password-field.component.html',
   styleUrls: ['../common-component.css']
 })
-export class PasswordFieldComponent extends CommonComponent implements ControlValueAccessor {
-  @Input() public id: string;
-  @Input() public name: string;
+export class BsPasswordField implements ControlValueAccessor, Validator {
+  @Input() public id: string = RandomString.create();
   @Input() public label?: string;
   @Input() public placeholder?: string;
-  @Input() public disabled: boolean;
-  @Input() public class: string;
-  @Input() public showErrorDescription: boolean;
+  @Input() public faIcon?: string = 'fas fa-lock';
+  @Input() public textIcon?: string;
+  @Input() public name: string = this.id;
+  @Input() public class: string = 'mb-2';
+  @Input() public disabled: boolean = false;
 
-  public value: string;
-  public onTouched = () => { };
-  public onChange = (value: string) => { };
-
+  @Input() public get value(): string {
+    return this._value;
+  }
+  set value(obj: string) {
+    if (obj !== this._value) {
+      this._onChange(obj);
+      this._value = obj;
+    }
+  }
+  public get hasIcon(): boolean {
+    return (this.faIcon ?? '') !== '' || (this.textIcon ?? '') !== '';
+  }
   public get isInvalid(): boolean {
-    return (this.formControl.invalid && (this.formControl.dirty || this.formControl.touched))!;
+    return (this._control?.invalid && (this._control.dirty || this._control.touched))!;
   }
   public get isValid(): boolean {
-    return (this.formControl.valid && (this.formControl.dirty || this.formControl.touched))!;
+    return (this._control?.valid && (this._control.dirty || this._control.touched))!;
   }
+  private _value: string = '';
+  private _onChange: (_: any) => void = () => { };
+  private _onTouched: () => void = () => { };
+  private _control?: AbstractControl;
 
-  constructor(@Self() public formControl: NgControl) {
-    super();
-    this.formControl.valueAccessor = this;
-    this.id = RandomString.create();
-    this.name = this.id;
-    this.disabled = false;
-    this.value = '';
-    this.showErrorDescription = true;
-    this.class = 'mb-2';
+  public writeValue(value: any): void {
+    if (value !== this._value) {
+      this._value = value;
+    }
   }
-
-  public registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
+  public registerOnChange(fn: (_: any) => void): void {
+    this._onChange = fn;
   }
-
-  public registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+  public registerOnTouched(fn: any): void {
+    this._onTouched = fn;
   }
-
-  public writeValue(value: string): void {
-    this.value = value;
-    this.onChange(value);
+  public setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
-
-  public onChangeValue(e: any): void {
-    this.writeValue(e.target.value);
+  public onBlur(): void {
+    this._onTouched();
   }
-
-  public setDisabledState(disabled: boolean): void {
-    this.disabled = disabled;
+  public validate(control: AbstractControl): ValidationErrors | null {
+    this._control = control;
+    return null;
   }
 }
+@NgModule({
+  imports: [CommonModule, FormsModule],
+  exports: [BsPasswordField],
+  declarations: [BsPasswordField]
+})
+export class BsPasswordFieldModule { }
