@@ -8,6 +8,7 @@
     top: calc(30%);
     left: 0.8rem;
     font-size: 1.12rem;
+    opacity: 0.5;
 }
 
 .has-icon label,

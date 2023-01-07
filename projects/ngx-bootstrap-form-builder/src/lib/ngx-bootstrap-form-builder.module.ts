@@ -3,36 +3,39 @@ import { NgModule } from '@angular/core';
 
 // Directives
 import { FormHandlerDirective } from './directives/form-group.directive';
-import { FormControlHandlerDirective } from './directives/form-control.directive';
+import { FormControlDirective } from './directives/form-control.directive';
 
 // Components
 import { BsTextFieldModule } from './components/text-field/text-field.component';
-import { PasswordFieldComponent } from './components/password-field/password-field.component';
-import { NumberFieldComponent } from './components/number-field/number-field.component';
-import { EmailFieldComponent } from './components/email-field/email-field.component';
-import { DropDownFieldComponent } from './components/drop-down-field/drop-down-field.component';
+import { BsNumberFieldModule } from './components/number-field/number-field.component';
+import { BsEmailFieldModule } from './components/email-field/email-field.component';
+import { BsDropDownFieldModule } from './components/drop-down-field/drop-down-field.component';
+import { BsPasswordFieldModule } from './components/password-field/password-field.component';
+import { BsTextAreaFieldModule } from './components/text-area-field/text-area-field.component';
 
 @NgModule({
   declarations: [
-    PasswordFieldComponent,
-    NumberFieldComponent,
-    EmailFieldComponent,
-    DropDownFieldComponent,
     FormHandlerDirective,
-    FormControlHandlerDirective
+    FormControlDirective
   ],
   imports: [
     CommonModule,
-    BsTextFieldModule
+    BsTextFieldModule,
+    BsPasswordFieldModule,
+    BsEmailFieldModule,
+    BsNumberFieldModule,
+    BsDropDownFieldModule,
+    BsTextAreaFieldModule
   ],
   exports: [
     BsTextFieldModule,
-    PasswordFieldComponent,
-    NumberFieldComponent,
-    EmailFieldComponent,
-    DropDownFieldComponent,
+    BsPasswordFieldModule,
+    BsNumberFieldModule,
+    BsEmailFieldModule,
+    BsDropDownFieldModule,
     FormHandlerDirective,
-    FormControlHandlerDirective
+    FormControlDirective,
+    BsTextAreaFieldModule
   ]
 })
 export class NgxBootstrapFormBuilderModule { }

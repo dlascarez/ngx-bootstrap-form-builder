@@ -8,4 +8,5 @@ export * from './lib/components/email-field/email-field.component';
 export * from './lib/components/number-field/number-field.component';
 export * from './lib/components/password-field/password-field.component';
 export * from './lib/components/text-field/text-field.component';
+export * from './lib/components/text-area-field/text-area-field.component';
 export * from './lib/ngx-bootstrap-form-builder.module';

@@ -1,7 +1,9 @@
-<label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">{{label}}</label>
-<div [ngClass]="{ 'has-icon': hasIcon }">
-    <i *ngIf="(faIcon ?? '') !== ''" class="{{faIcon}} input-icon"></i>
-    <i *ngIf="textIcon" class="fa input-icon">{{ textIcon }}</i>
-    <input type="text" class="form-control" [class]="class" [id]="id" [name]="name" [placeholder]="placeholder ?? ''"
-        [disabled]="disabled" [(ngModel)]="value" (blur)="onBlur()">
+<div [class]="class">
+    <label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">{{label}}</label>
+    <div [ngClass]="{ 'has-icon': hasIcon, 'is-invalid': isInvalid, 'is-valid': isValid }">
+        <i *ngIf="hasIcon && (textIcon ?? '') === ''" class="{{faIcon}} input-icon"></i>
+        <i *ngIf="hasIcon && (textIcon ?? '') !== ''" class="fa input-icon">{{ textIcon }}</i>
+        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': isInvalid, 'is-valid': isValid }" [id]="id"
+            [name]="name" [placeholder]="placeholder ?? ''" [disabled]="disabled" [(ngModel)]="value" (blur)="onBlur()">
+    </div>
 </div>
