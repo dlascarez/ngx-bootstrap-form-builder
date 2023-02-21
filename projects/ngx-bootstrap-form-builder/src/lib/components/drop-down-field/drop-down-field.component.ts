@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input, NgModule } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, NgModule, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
 
@@ -38,8 +38,11 @@ export class BsDropDownField implements ControlValueAccessor, Validator {
     if (obj !== this._value) {
       this._onChange(obj);
       this._value = obj;
+      this.valueChanged?.emit(this._value);
     }
   }
+  @Output() public valueChanged: EventEmitter<any> = new EventEmitter();
+
   public get isInvalid(): boolean {
     return (this._control?.invalid && (this._control.dirty || this._control.touched))!;
   }
@@ -53,7 +56,7 @@ export class BsDropDownField implements ControlValueAccessor, Validator {
 
   public writeValue(value: any): void {
     if (value !== this._value) {
-      this._value = value ?? '';
+      this._value = (value ?? '').toString();
     }
   }
   public registerOnChange(fn: (_: any) => void): void {

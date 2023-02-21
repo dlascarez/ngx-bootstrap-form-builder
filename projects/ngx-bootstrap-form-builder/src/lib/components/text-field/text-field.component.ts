@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input, NgModule } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, forwardRef, Input, NgModule, Output } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
 
 export const TEXTFIELD_VALUE_ACCESSOR: any = {
@@ -29,6 +29,8 @@ export class BsTextField implements ControlValueAccessor, Validator {
   @Input() public class: string = 'mb-2';
   @Input() public disabled: boolean = false;
 
+  @Output() public click: EventEmitter<void> = new EventEmitter();
+
   @Input() public get value(): string {
     return this._value;
   }
@@ -46,6 +48,9 @@ export class BsTextField implements ControlValueAccessor, Validator {
   }
   public get isValid(): boolean {
     return (this._control?.valid && (this._control.dirty || this._control.touched))!;
+  }
+  public get isRequired(): boolean {
+    return this._control?.hasValidator(Validators.required) ?? false;
   }
   private _value: string = '';
   private _onChange: (_: any) => void = () => { };
@@ -77,6 +82,7 @@ export class BsTextField implements ControlValueAccessor, Validator {
 @NgModule({
   imports: [CommonModule, FormsModule],
   exports: [BsTextField],
-  declarations: [BsTextField]
+  declarations: [BsTextField],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BsTextFieldModule { }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 // Directives
 import { FormHandlerDirective } from './directives/form-group.directive';
@@ -36,6 +36,7 @@ import { BsTextAreaFieldModule } from './components/text-area-field/text-area-fi
     FormHandlerDirective,
     FormControlDirective,
     BsTextAreaFieldModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NgxBootstrapFormBuilderModule { }
