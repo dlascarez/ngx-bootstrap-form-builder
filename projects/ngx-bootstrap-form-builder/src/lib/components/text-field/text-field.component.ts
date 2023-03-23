@@ -82,7 +82,6 @@ export class BsTextField implements ControlValueAccessor, Validator {
 @NgModule({
   imports: [CommonModule, FormsModule],
   exports: [BsTextField],
-  declarations: [BsTextField],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [BsTextField]
 })
 export class BsTextFieldModule { }

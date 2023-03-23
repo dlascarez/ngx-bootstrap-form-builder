@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 // Directives
 import { FormHandlerDirective } from './directives/form-group.directive';
@@ -12,11 +12,13 @@ import { BsEmailFieldModule } from './components/email-field/email-field.compone
 import { BsDropDownFieldModule } from './components/drop-down-field/drop-down-field.component';
 import { BsPasswordFieldModule } from './components/password-field/password-field.component';
 import { BsTextAreaFieldModule } from './components/text-area-field/text-area-field.component';
+import { LoadingButtonDirective } from './directives/loading-button.directive';
 
 @NgModule({
   declarations: [
     FormHandlerDirective,
-    FormControlDirective
+    FormControlDirective,
+    LoadingButtonDirective
   ],
   imports: [
     CommonModule,
@@ -33,10 +35,10 @@ import { BsTextAreaFieldModule } from './components/text-area-field/text-area-fi
     BsNumberFieldModule,
     BsEmailFieldModule,
     BsDropDownFieldModule,
+    BsTextAreaFieldModule,
     FormHandlerDirective,
     FormControlDirective,
-    BsTextAreaFieldModule
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    LoadingButtonDirective
+  ]
 })
 export class NgxBootstrapFormBuilderModule { }
