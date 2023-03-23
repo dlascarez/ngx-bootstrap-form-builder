@@ -1,5 +1,7 @@
 <div [class]="class">
-    <label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">{{label}}</label>
+    <label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">
+        {{label}} <span *ngIf="isRequired" class="text-danger">*</span>
+    </label>
     <div [ngClass]="{ 'has-icon': hasIcon, 'is-invalid': isInvalid, 'is-valid': isValid }">
         <i *ngIf="hasIcon && (textIcon ?? '') === ''" class="{{faIcon}} input-icon"></i>
         <i *ngIf="hasIcon && (textIcon ?? '') !== ''" class="fa input-icon">{{ textIcon }}</i>

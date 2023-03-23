@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, forwardRef, Input, NgModule, Output } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
 
@@ -48,6 +49,9 @@ export class BsDropDownField implements ControlValueAccessor, Validator {
   }
   public get isValid(): boolean {
     return (this._control?.valid && (this._control.dirty || this._control.touched))!;
+  }
+  public get isRequired(): boolean {
+    return this._control?.hasValidator(Validators.required) ?? false;
   }
   private _value: string = '';
   private _onChange: (_: any) => void = () => { };

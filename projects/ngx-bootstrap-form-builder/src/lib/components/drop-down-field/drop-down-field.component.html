@@ -1,5 +1,7 @@
 <div [class]="class">
-    <label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">{{label}}</label>
+    <label *ngIf="(label ?? '') !== ''" [for]="id" class="form-label">
+        {{label}} <span *ngIf="isRequired" class="text-danger">*</span>
+    </label>
     <select [id]="id" [name]="name" class="form-select" [ngClass]="{ 'is-invalid': isInvalid, 'is-valid': isValid }"
         [disabled]="disabled" [(ngModel)]="value">
         <option *ngIf="showSelectOne" value="" [selected]="value === ''">{{selectOneText}}</option>
