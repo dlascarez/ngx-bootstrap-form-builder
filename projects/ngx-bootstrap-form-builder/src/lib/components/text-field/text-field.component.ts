@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, forwardRef, Input, NgModule, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, NgModule, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
 
