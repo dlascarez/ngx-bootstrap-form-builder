@@ -6,7 +6,8 @@
         <i *ngIf="hasIcon && (textIcon ?? '') === ''" class="{{faIcon}} input-icon"></i>
         <i *ngIf="hasIcon && (textIcon ?? '') !== ''" class="fa input-icon">{{ textIcon }}</i>
         <input type="text" class="form-control" [ngClass]="{ 'is-invalid': isInvalid, 'is-valid': isValid }" [id]="id"
-            [name]="name" [placeholder]="placeholder ?? ''" [disabled]="disabled" [(ngModel)]="value" (blur)="onBlur()"
-            (click)="click.emit()">
+            [name]="name" [placeholder]="placeholder ?? ''" [disabled]="disabled" [readOnly]="readonly"
+            [required]="isRequired" [(ngModel)]="value" (blur)="onBlur($event)" (click)="click.emit()"
+            (change)="change.emit($event)">
     </div>
 </div>

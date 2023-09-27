@@ -28,8 +28,12 @@ export class BsTextField implements ControlValueAccessor, Validator {
   @Input() public name: string = this.id;
   @Input() public class: string = 'mb-2';
   @Input() public disabled: boolean = false;
+  @Input() public readonly: boolean = false;
+  @Input() public required: boolean = false;
 
   @Output() public click: EventEmitter<void> = new EventEmitter();
+  @Output() public change: EventEmitter<Event> = new EventEmitter();
+  @Output() public blur: EventEmitter<FocusEvent> = new EventEmitter();
 
   @Input() public get value(): string {
     return this._value;
@@ -50,7 +54,7 @@ export class BsTextField implements ControlValueAccessor, Validator {
     return (this._control?.valid && (this._control.dirty || this._control.touched))!;
   }
   public get isRequired(): boolean {
-    return this._control?.hasValidator(Validators.required) ?? false;
+    return this.required || (this._control?.hasValidator(Validators.required) ?? false);
   }
   private _value: string = '';
   private _onChange: (_: any) => void = () => { };
@@ -71,8 +75,9 @@ export class BsTextField implements ControlValueAccessor, Validator {
   public setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-  public onBlur(): void {
+  public onBlur(event: FocusEvent): void {
     this._onTouched();
+    this.blur?.emit(event);
   }
   public validate(control: AbstractControl): ValidationErrors | null {
     this._control = control;

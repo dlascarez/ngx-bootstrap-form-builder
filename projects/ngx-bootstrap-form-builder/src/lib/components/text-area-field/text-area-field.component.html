@@ -3,5 +3,6 @@
         {{label}} <span *ngIf="isRequired" class="text-danger">*</span>
     </label>
     <textarea class="form-control" [ngClass]="{ 'is-invalid': isInvalid, 'is-valid': isValid }" [id]="id" [name]="name"
-        [placeholder]="placeholder ?? ''" [disabled]="disabled" [(ngModel)]="value" (blur)="onBlur()"></textarea>
+        [placeholder]="placeholder ?? ''" [disabled]="disabled" [readOnly]="readonly" [required]="isRequired"
+        [(ngModel)]="value" (blur)="onBlur($event)" (click)="click.emit()" (change)="change.emit($event)"></textarea>
 </div>

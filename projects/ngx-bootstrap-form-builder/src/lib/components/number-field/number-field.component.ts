@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input, NgModule } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, NgModule, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { RandomString } from '../../classes/random-string.class';
@@ -29,6 +29,12 @@ export class BsNumberField implements ControlValueAccessor, Validator {
   @Input() public name: string = this.id;
   @Input() public class: string = 'mb-2';
   @Input() public disabled: boolean = false;
+  @Input() public readonly: boolean = false;
+  @Input() public required: boolean = false;
+
+  @Output() public click: EventEmitter<void> = new EventEmitter();
+  @Output() public change: EventEmitter<Event> = new EventEmitter();
+  @Output() public blur: EventEmitter<FocusEvent> = new EventEmitter();
 
   @Input() public get value(): number | null {
     return this._value;
@@ -50,7 +56,7 @@ export class BsNumberField implements ControlValueAccessor, Validator {
     return (this._control?.valid && (this._control.dirty || this._control.touched))!;
   }
   public get isRequired(): boolean {
-    return this._control?.hasValidator(Validators.required) ?? false;
+    return this.required || (this._control?.hasValidator(Validators.required) ?? false);
   }
   private _value: number | null = null;
   private _onChange: (_: any) => void = () => { };
@@ -71,8 +77,9 @@ export class BsNumberField implements ControlValueAccessor, Validator {
   public setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-  public onBlur(): void {
+  public onBlur(event: FocusEvent): void {
     this._onTouched();
+    this.blur?.emit(event);
   }
   public validate(control: AbstractControl): ValidationErrors | null {
     this._control = control;

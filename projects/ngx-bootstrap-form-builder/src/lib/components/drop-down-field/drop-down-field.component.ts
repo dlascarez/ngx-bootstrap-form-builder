@@ -26,6 +26,7 @@ export class BsDropDownField implements ControlValueAccessor, Validator {
   @Input() public name: string = this.id;
   @Input() public class: string = 'mb-2';
   @Input() public disabled: boolean = false;
+  @Input() public required: boolean = false;
   @Input() public items: any[] = [];
   @Input() public keyValue: string = 'id';
   @Input() public textValue: string = 'text';
@@ -51,7 +52,7 @@ export class BsDropDownField implements ControlValueAccessor, Validator {
     return (this._control?.valid && (this._control.dirty || this._control.touched))!;
   }
   public get isRequired(): boolean {
-    return this._control?.hasValidator(Validators.required) ?? false;
+    return this.required || (this._control?.hasValidator(Validators.required) ?? false);
   }
   private _value: string = '';
   private _onChange: (_: any) => void = () => { };
